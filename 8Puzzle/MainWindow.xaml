@@ -66,23 +66,23 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="8*"/>
                 </Grid.ColumnDefinitions>
-                    <TextBox x:Name="Setter1" Grid.Row="0" Grid.Column="0">
+                    <TextBox x:Name="Setter1" Grid.Row="0" Grid.Column="0" Text="1" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter2" Grid.Row="0" Grid.Column="1">
+                    <TextBox x:Name="Setter2" Grid.Row="0" Grid.Column="1" Text="2" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter3" Grid.Row="0" Grid.Column="2">
+                    <TextBox x:Name="Setter3" Grid.Row="0" Grid.Column="2" Text="3" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter4" Grid.Row="1" Grid.Column="0">
+                    <TextBox x:Name="Setter4" Grid.Row="1" Grid.Column="0" Text="4" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter5" Grid.Row="1" Grid.Column="1">
+                    <TextBox x:Name="Setter5" Grid.Row="1" Grid.Column="1" Text="5" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter6" Grid.Row="1" Grid.Column="2">
+                    <TextBox x:Name="Setter6" Grid.Row="1" Grid.Column="2" Text="6" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter7" Grid.Row="2" Grid.Column="0">
+                    <TextBox x:Name="Setter7" Grid.Row="2" Grid.Column="0" Text="7" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter8" Grid.Row="2" Grid.Column="1">
+                    <TextBox x:Name="Setter8" Grid.Row="2" Grid.Column="1" Text="8" TextAlignment="Center">
                     </TextBox>
-                    <TextBox x:Name="Setter0" Grid.Row="2" Grid.Column="2">
+                    <TextBox x:Name="Setter0" Grid.Row="2" Grid.Column="2" Text="0" TextAlignment="Center">
                     </TextBox>
                     <Button x:Name="SetBoardButton" Content="Set" Padding="2" Grid.Row="0" Grid.Column="3" Margin="10 0 300 0" Click="SetBoardButton_Click"/>
             </Grid>

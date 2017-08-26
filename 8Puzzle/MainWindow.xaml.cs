@@ -235,7 +235,11 @@ namespace _8Puzzle
 
             
         }
-
+        /// <summary>
+        /// Updates the Board with the values in the text boxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetBoardButton_Click(object sender, RoutedEventArgs e)
         {
             int[] newBoard = new int[10];
