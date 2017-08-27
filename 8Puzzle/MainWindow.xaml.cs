@@ -260,9 +260,7 @@ namespace _8Puzzle
                 }
                 else { break; }
             }
-            Console.WriteLine("Done");
             game.SetBoard(newBoard);
-            Console.WriteLine(game.GetBoardString());
             UpdateBoard(game.GetBoard());
         }
 

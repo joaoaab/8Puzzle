@@ -130,15 +130,17 @@ namespace _8Puzzle
                 foreach(Vertex Q in V.children)
                 {
                     Q.height = Q.GetParent().height + 1;
-                    if (OpenListHasBetterVersion(Q, heapOpen))
+                    Q.priority = Q.priority + Q.height;
+                    if (ListHasBetterVersion(Q, heapOpen))
                     {
                         continue;
                     }
-                    if (OpenListHasBetterVersion(Q, heapClosed))
+                    if (ListHasBetterVersion(Q, heapClosed))
                     {
                         continue;
                     }
                     heapOpen.Add(Q);
+                    heapOpen.Sort(new CompareByPriority());
                 }
                 heapClosed.Add(V);
             }
@@ -165,7 +167,7 @@ namespace _8Puzzle
         /// <param name="V">Vertex to test</param>
         /// <param name="heapOpen">List</param>
         /// <returns>true if it has a better candidate, false otherwise</returns>
-        private bool OpenListHasBetterVersion(Vertex V, List<Vertex> heapOpen)
+        private bool ListHasBetterVersion(Vertex V, List<Vertex> heapOpen)
         {
             return heapOpen.Find(n => n.board.SequenceEqual(V.board) && n.priority <= V.priority) != null;
         }
