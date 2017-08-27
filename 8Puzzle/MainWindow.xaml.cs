@@ -262,5 +262,14 @@ namespace _8Puzzle
             game.SetBoard(newBoard);
             UpdateBoard(game.GetBoard());
         }
+
+        private void Setter1_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            foreach(TextBox element in GridSetter.Children.OfType<TextBox>())
+            {
+                TextBox temp = (TextBox)element;
+                temp.Text = "";
+            }
+        }
     }
 }

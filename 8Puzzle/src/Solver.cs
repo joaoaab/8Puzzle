@@ -34,11 +34,20 @@ namespace _8Puzzle
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Checks if the puzzle is completed
+        /// </summary>
+        /// <param name="currentBoard"></param>
+        /// <returns>true|false</returns>
         private bool IsCompletedAI(int[] currentBoard)
         {
             return currentBoard.SequenceEqual<int>(completedBoard);
         }
 
+        /// <summary>
+        /// Backtracks the Vertexes to find the solution, and then reverses the list
+        /// </summary>
+        /// <param name="V">Vertex that contains the final state</param>
         public void CreateSolution(Vertex V)
         {
             while (V.IsNotFirst())
@@ -52,13 +61,16 @@ namespace _8Puzzle
             GC.Collect();
         }
 
+        /// <summary>
+        /// iterates through the list in order to update the UI with the solution
+        /// </summary>
         public void PrintSolution()
         {
             foreach(int[] b in this.solution)
             {
                 this.game.SetMoveCount(game.GetMoveCount() + 1);
                 main.UpdateBoard(b);
-                Thread.Sleep(500);
+                Thread.Sleep(200);
             }
             this.solution = null;
             GC.Collect();
@@ -107,7 +119,7 @@ namespace _8Puzzle
                 Vertex V = GetBestFromList(heapOpen);
                 heapOpen.RemoveAt(0);
                 V.GenerateStates();
-                PrintBoard(V.board);
+                //PrintBoard(V.board);
                 if (IsCompletedAI(V.board))
                 {
                     this.endPoint = V;
@@ -126,11 +138,8 @@ namespace _8Puzzle
                     {
                         continue;
                     }
-
-                    PrintBoard(Q.board);
                     heapOpen.Add(Q);
                 }
-                ///Thread.Sleep(500);
                 heapClosed.Add(V);
             }
             PrintBoard(this.endPoint.board);
