@@ -12,6 +12,8 @@ namespace _8Puzzle
         private bool hasParent;
         public List<Vertex> children;
         private Vertex parent;
+        public int height { get; set; }
+        public int priority { get; set; }
 
         /// <summary>
         /// List that contains all the moves possible
@@ -26,12 +28,15 @@ namespace _8Puzzle
                                                             new bool[] { true, true, true, false } ,
                                                             new bool[] { true, true, false, false }};
 
+        
         public Vertex(int[] board)
         {
             this.board = board;
             this.children = new List<Vertex>();
             this.parent = null;
             this.hasParent = false;
+            this.height = 0;
+            this.priority = ManhattanHeuristic(this.board);
         }
 
         public int ChildrenCount()
@@ -105,6 +110,11 @@ namespace _8Puzzle
             }
         }
 
+        /// <summary>
+        /// Finds the index of the 0(blank)
+        /// in the array that represents the board
+        /// </summary>
+        /// <returns>Index of the blank symbol</returns>
         private int GetIndex0()
         {
             int index0 = 0;
@@ -119,6 +129,45 @@ namespace _8Puzzle
             return index0;
         }
 
+        /// <summary>
+        /// Calculates the distance of the numbers from it's rightful place
+        /// </summary>
+        /// <param name="board">the board to be evaluated</param>
+        /// <returns>The Heuristic Value of the Node</returns>
+        public int ManhattanHeuristic(int[] board)
+        {
+            int heuristicValue = 0;
+            for (int i = 0; i < board.Length; i++)
+            {
+                int value = board[i];
+                int x = i / 3;
+                int y = i % 3;
+                int xTarget = 0;
+                int yTarget = 0;
+                if (value != 0)
+                {
+                    xTarget = value / 3;
+                    yTarget = value - (xTarget * 3);
+                }
+                else
+                {
+                    xTarget = 2;
+                    yTarget = 3;
+                }
+
+                if (yTarget == 0)
+                {
+                    xTarget -= 1;
+                    yTarget = 2;
+                }
+                else
+                {
+                    yTarget -= 1;
+                }
+                heuristicValue += Math.Abs(x - xTarget) + Math.Abs(y - yTarget);
+            }
+            return heuristicValue;
+        }
 
     }
 

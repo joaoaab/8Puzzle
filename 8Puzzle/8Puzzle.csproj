@@ -70,6 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="src\CompareByPriority.cs" />
     <Compile Include="src\Solver.cs" />
     <Compile Include="src\Tree.cs" />
     <Compile Include="src\Puzzle.cs" />

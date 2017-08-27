@@ -225,15 +225,14 @@ namespace _8Puzzle
                 }
                 else if (AIPicker.SelectedIndex == 1)
                 {
-                    
+                    Thread th = new Thread(inteligence.AStar);
+                    th.Start();
                 }
             }
             else
             {
                 Shuffles();
             }
-
-            
         }
         /// <summary>
         /// Updates the Board with the values in the text boxes

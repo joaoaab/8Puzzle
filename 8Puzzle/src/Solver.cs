@@ -39,13 +39,41 @@ namespace _8Puzzle
             return currentBoard.SequenceEqual<int>(completedBoard);
         }
 
+        public void CreateSolution(Vertex V)
+        {
+            while (V.IsNotFirst())
+            {
+                solution.Add(V.board);
+                V = V.GetParent();
+                V.children = null;
+            }
+            solution.Reverse();
+            this.frontier = null;
+            GC.Collect();
+        }
 
+        public void PrintSolution()
+        {
+            foreach(int[] b in this.solution)
+            {
+                this.game.SetMoveCount(game.GetMoveCount() + 1);
+                main.UpdateBoard(b);
+                Thread.Sleep(500);
+            }
+            this.solution = null;
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// Breadth-First Search in the Vertexes
+        /// Until it finds the Vertex with the board that is the solution
+        /// </summary>
         public void BFS()
         {
             Queue<Vertex> fila = new Queue<Vertex>();
             fila.Enqueue(this.frontier);
             Vertex V;
-            while(fila.Count > 0)
+            while (fila.Count > 0)
             {
                 V = fila.Dequeue();
                 V.GenerateStates();
@@ -66,35 +94,71 @@ namespace _8Puzzle
             PrintSolution();
         }
 
-        public void CreateSolution(Vertex V)
-        {
-            while (V.IsNotFirst())
-            {
-                solution.Add(V.board);
-                V = V.GetParent();
-            }
-            solution.Reverse();
-            this.frontier = null;
-        }
 
-        public void PrintSolution()
-        {
-            foreach(int[] b in this.solution)
-            {
-                this.game.SetMoveCount(game.GetMoveCount() + 1);
-                main.UpdateBoard(b);
-                Thread.Sleep(500);
-            }
-            this.solution = null;
-            GC.Collect();
-        }
-
+        /// <summary>
+        /// Peforms the A* algorithm and stores the solution
+        /// </summary>
         public void AStar()
         {
+            List<Vertex> heapOpen = new List<Vertex> { this.frontier };
+            List<Vertex> heapClosed = new List<Vertex>();
+            while(heapOpen.Count > 0)
+            {
+                Vertex V = GetBestFromList(heapOpen);
+                heapOpen.RemoveAt(0);
+                V.GenerateStates();
+                PrintBoard(V.board);
+                if (IsCompletedAI(V.board))
+                {
+                    this.endPoint = V;
+                    heapOpen.Clear();
+                    heapClosed.Clear();
+                    break;
+                }
+                foreach(Vertex Q in V.children)
+                {
+                    Q.height = Q.GetParent().height + 1;
+                    if (OpenListHasBetterVersion(Q, heapOpen))
+                    {
+                        continue;
+                    }
+                    if (OpenListHasBetterVersion(Q, heapClosed))
+                    {
+                        continue;
+                    }
 
+                    PrintBoard(Q.board);
+                    heapOpen.Add(Q);
+                }
+                ///Thread.Sleep(500);
+                heapClosed.Add(V);
+            }
+            PrintBoard(this.endPoint.board);
+            CreateSolution(endPoint);
+            PrintSolution();
+            Console.WriteLine("Found it !");
         }
 
+        /// <summary>
+        /// Returns the vertex with the least priority from the list
+        /// </summary>
+        /// <param name="vertexList"></param>
+        /// <returns>the best vertex to go</returns>
+        private Vertex GetBestFromList(List<Vertex> vertexList)
+        {
+            vertexList.Sort(new CompareByPriority());
+            return vertexList.First();
+        }
 
-
+        /// <summary>
+        /// Checks if the list has a better candidate passing through that vertex
+        /// </summary>
+        /// <param name="V">Vertex to test</param>
+        /// <param name="heapOpen">List</param>
+        /// <returns>true if it has a better candidate, false otherwise</returns>
+        private bool OpenListHasBetterVersion(Vertex V, List<Vertex> heapOpen)
+        {
+            return heapOpen.Find(n => n.board.SequenceEqual(V.board) && n.priority <= V.priority) != null;
+        }
     }
 }
