@@ -79,9 +79,8 @@ namespace _8Puzzle
             {
                 for(int j = i+1; j < currentBoard.Length; j++)
                 {
-                    if (currentBoard[i] > currentBoard[j]) inversions++;
+                    if (currentBoard[i] != 0 && currentBoard[j] != 0 &&  currentBoard[i] > currentBoard[j]) inversions++;
                 }
-                if (currentBoard[i] == 0 && i % 2 == 1) inversions++;
             }
             return (inversions % 2 == 0);
         }

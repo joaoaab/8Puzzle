@@ -231,9 +231,11 @@ namespace _8Puzzle
             }
             else
             {
-                Shuffles();
+                MessageBox.Show("Board not solvable");
             }
         }
+
+
         /// <summary>
         /// Updates the Board with the values in the text boxes
         /// </summary>
@@ -241,7 +243,7 @@ namespace _8Puzzle
         /// <param name="e"></param>
         private void SetBoardButton_Click(object sender, RoutedEventArgs e)
         {
-            int[] newBoard = new int[10];
+            int[] newBoard = new int[9];
             foreach(TextBox element in GridSetter.Children.OfType<TextBox>())
             {
                 TextBox temp = (TextBox)element;
@@ -260,12 +262,13 @@ namespace _8Puzzle
             }
             Console.WriteLine("Done");
             game.SetBoard(newBoard);
+            Console.WriteLine(game.GetBoardString());
             UpdateBoard(game.GetBoard());
         }
 
-        private void Setter1_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void Setter1_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            foreach(TextBox element in GridSetter.Children.OfType<TextBox>())
+            foreach (TextBox element in GridSetter.Children.OfType<TextBox>())
             {
                 TextBox temp = (TextBox)element;
                 temp.Text = "";
