@@ -119,7 +119,6 @@ namespace _8Puzzle
                 Vertex V = GetBestFromList(heapOpen);
                 heapOpen.RemoveAt(0);
                 V.GenerateStates();
-                //PrintBoard(V.board);
                 if (IsCompletedAI(V.board))
                 {
                     this.endPoint = V;
@@ -144,10 +143,43 @@ namespace _8Puzzle
                 }
                 heapClosed.Add(V);
             }
-            PrintBoard(this.endPoint.board);
             CreateSolution(endPoint);
             PrintSolution();
-            Console.WriteLine("Found it !");
+        }
+
+        public void BestFirstSearch()
+        {
+            List<Vertex> heapOpen = new List<Vertex> { this.frontier };
+            List<Vertex> heapClosed = new List<Vertex>();
+            while (heapOpen.Count > 0)
+            {
+                Vertex V = GetBestFromList(heapOpen);
+                heapOpen.RemoveAt(0);
+                V.GenerateStates();
+                if (IsCompletedAI(V.board))
+                {
+                    this.endPoint = V;
+                    heapOpen.Clear();
+                    heapClosed.Clear();
+                    break;
+                }
+                foreach (Vertex Q in V.children)
+                {
+                    if (ListHasBetterVersion(Q, heapOpen))
+                    {
+                        continue;
+                    }
+                    if (ListHasBetterVersion(Q, heapClosed))
+                    {
+                        continue;
+                    }
+                    heapOpen.Add(Q);
+                    heapOpen.Sort(new CompareByPriority());
+                }
+                heapClosed.Add(V);
+            }
+            CreateSolution(endPoint);
+            PrintSolution();
         }
 
         /// <summary>

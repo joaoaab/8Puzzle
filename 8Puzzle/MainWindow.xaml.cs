@@ -218,15 +218,23 @@ namespace _8Puzzle
                 MainWindow myWindow = Window.GetWindow(this) as MainWindow;
                 inteligence = new Solver(game.GetBoard(), myWindow, game);
                 game.SetMoveCount(0);
-                if (AIPicker.SelectedIndex == 0)
+                Thread th;
+                switch (AIPicker.SelectedIndex)
                 {
-                    Thread th = new Thread(inteligence.BFS);
-                    th.Start();
-                }
-                else if (AIPicker.SelectedIndex == 1)
-                {
-                    Thread th = new Thread(inteligence.AStar);
-                    th.Start();
+                    case 0:
+                        th = new Thread(inteligence.BFS);
+                        th.Start();
+                        break;
+
+                    case 1:
+                        th = new Thread(inteligence.AStar);
+                        th.Start();
+                        break;
+
+                    case 2:
+                        th = new Thread(inteligence.BestFirstSearch);
+                        th.Start();
+                        break;
                 }
             }
             else

@@ -45,6 +45,7 @@
                     <ComboBox x:Name="AIPicker" Margin="0 5 0 0" Padding="2">
                         <ComboBoxItem IsSelected="True">Breadth-First Search</ComboBoxItem>
                         <ComboBoxItem>A*</ComboBoxItem>
+                        <ComboBoxItem>Best-First Search</ComboBoxItem>
                     </ComboBox>
                     <Button x:Name="RunButton" Margin="0 5 250 0" Content="Run!" Click="RunButton_Click"/>
                 </StackPanel>
