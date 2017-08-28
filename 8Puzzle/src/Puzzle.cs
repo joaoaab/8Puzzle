@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace _8Puzzle
 {
+    /// <summary>
+    /// Implements the rules of the game 
+    /// </summary>
     public class Puzzle
     {
         /// Boards to keep track of win condition

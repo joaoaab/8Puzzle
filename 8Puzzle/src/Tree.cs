@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace _8Puzzle
 {
+    /// <summary>
+    /// The main data class of the project
+    /// Necessary to build the "Search Tree" used in the Algorithms
+    /// </summary>
     public class Vertex
     {
         public int[] board;

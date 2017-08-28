@@ -7,6 +7,9 @@ using System.Threading;
 
 namespace _8Puzzle
 {
+    /// <summary>
+    /// This class uses the rules of the game to find a solution to the board
+    /// </summary>
     public class Solver
     {
         public Vertex frontier;
@@ -79,6 +82,8 @@ namespace _8Puzzle
         /// <summary>
         /// Breadth-First Search in the Vertexes
         /// Until it finds the Vertex with the board that is the solution
+        /// Complete and Not Optimal
+        /// O(b^d) where 'b' is the factor of expansion and 'd' is the level of the tree
         /// </summary>
         public void BFS()
         {
@@ -109,6 +114,9 @@ namespace _8Puzzle
 
         /// <summary>
         /// Peforms the A* algorithm and stores the solution
+        /// It works by considering both the path till the current node
+        /// and "the rest of the way to go" to the final node
+        /// Complete and Optimal
         /// </summary>
         public void AStar()
         {
@@ -139,7 +147,6 @@ namespace _8Puzzle
                         continue;
                     }
                     heapOpen.Add(Q);
-                    heapOpen.Sort(new CompareByPriority());
                 }
                 heapClosed.Add(V);
             }
@@ -147,6 +154,12 @@ namespace _8Puzzle
             PrintSolution();
         }
 
+        /// <summary>
+        /// Peforms the Greedy Algorithm A.K.A Best-First Search
+        /// it works by going always to the path that seems shorter
+        /// ignoring the path from the start until the node being evaluated
+        /// Not Complete Not Optimal
+        /// </summary>
         public void BestFirstSearch()
         {
             List<Vertex> heapOpen = new List<Vertex> { this.frontier };
@@ -174,7 +187,6 @@ namespace _8Puzzle
                         continue;
                     }
                     heapOpen.Add(Q);
-                    heapOpen.Sort(new CompareByPriority());
                 }
                 heapClosed.Add(V);
             }
@@ -199,9 +211,9 @@ namespace _8Puzzle
         /// <param name="V">Vertex to test</param>
         /// <param name="heapOpen">List</param>
         /// <returns>true if it has a better candidate, false otherwise</returns>
-        private bool ListHasBetterVersion(Vertex V, List<Vertex> heapOpen)
+        private bool ListHasBetterVersion(Vertex V, List<Vertex> heap)
         {
-            return heapOpen.Find(n => n.board.SequenceEqual(V.board) && n.priority <= V.priority) != null;
+            return heap.Find(n => n.board.SequenceEqual(V.board) && n.priority <= V.priority) != null;
         }
     }
 }
