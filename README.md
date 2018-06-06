@@ -1,4 +1,4 @@
-# Project Title
+# 8Puzzle Solver
 
 The Project target is to create a solver for the 8Puzzle game using concepts and algorithms learned at Intelligent Systems class
 
