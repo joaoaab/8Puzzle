@@ -154,6 +154,38 @@ namespace _8Puzzle
             PrintSolution();
         }
 
+
+        public void AStarUpdated()
+        {
+            SortedList<Vertex, int> NextVisit = new SortedList<Vertex, int>(new CompareByHeight());
+            NextVisit.Add(this.frontier, 0);
+            while(NextVisit.Count > 0)
+            {
+                KeyValuePair<Vertex, int> V = NextVisit.ElementAt(0);
+                NextVisit.RemoveAt(0);
+                V.Key.GenerateStates();
+                if (IsCompletedAI(V.Key.board))
+                {
+                    this.endPoint = V.Key;
+                    NextVisit.Clear();
+                    break;
+                }
+                foreach(Vertex Q in V.Key.children)
+                {
+                    Q.height = Q.GetParent().height + 1;
+                    Q.priority = Q.priority + Q.height;
+                    if (NextVisit.ContainsKey(Q))
+                    {
+                        continue;
+                    }
+                    NextVisit.Add(Q, Q.priority);
+                }
+            }
+            CreateSolution(endPoint);
+            PrintSolution();
+        }
+
+
         /// <summary>
         /// Peforms the Greedy Algorithm A.K.A Best-First Search
         /// it works by going always to the path that seems shorter

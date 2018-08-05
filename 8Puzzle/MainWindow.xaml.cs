@@ -235,6 +235,10 @@ namespace _8Puzzle
                         th = new Thread(inteligence.BestFirstSearch);
                         th.Start();
                         break;
+                    case 3:
+                        th = new Thread(inteligence.AStarUpdated);
+                        th.Start();
+                        break;
                 }
             }
             else

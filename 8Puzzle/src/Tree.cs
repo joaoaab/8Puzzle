@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace _8Puzzle
 {
-    /// <summary>
-    /// The main data class of the project
-    /// Necessary to build the "Search Tree" used in the Algorithms
-    /// </summary>
     public class Vertex
     {
         public int[] board;
@@ -32,7 +28,7 @@ namespace _8Puzzle
                                                             new bool[] { true, true, true, false } ,
                                                             new bool[] { true, true, false, false }};
 
-        
+
         public Vertex(int[] board)
         {
             this.board = board;
@@ -40,7 +36,7 @@ namespace _8Puzzle
             this.parent = null;
             this.hasParent = false;
             this.height = 0;
-            this.priority = ManhattanHeuristic(this.board);
+            this.priority = ManhattanHeuristic(this.board) + outOfPlaceHeuristic(this.board);
         }
 
         public int ChildrenCount()
@@ -150,29 +146,28 @@ namespace _8Puzzle
                 int yTarget = 0;
                 if (value != 0)
                 {
-                    xTarget = value / 3;
-                    yTarget = value - (xTarget * 3);
+                    xTarget = (value - 1) / 3;
+                    yTarget = (value - 1) % 3;
                 }
                 else
                 {
                     xTarget = 2;
-                    yTarget = 3;
-                }
-
-                if (yTarget == 0)
-                {
-                    xTarget -= 1;
                     yTarget = 2;
-                }
-                else
-                {
-                    yTarget -= 1;
                 }
                 heuristicValue += Math.Abs(x - xTarget) + Math.Abs(y - yTarget);
             }
             return heuristicValue;
         }
 
-    }
+        public int outOfPlaceHeuristic(int[] board)
+        {
+            int sum = 0;
+            for (int i = 0; i < board.Length; i++)
+            {
+                if (board[i] != 0 && board[i] != i + 1) sum++;
+            }
+            return sum;
+        }
 
+    }
 }

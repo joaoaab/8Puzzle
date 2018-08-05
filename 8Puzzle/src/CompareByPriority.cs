@@ -26,4 +26,25 @@ namespace _8Puzzle
             }
         }
     }
+
+    class CompareByHeight : IComparer<Vertex>
+    {
+        /// <summary>
+        /// Compares 2 Vertexes by it's height
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int Compare(Vertex x, Vertex y)
+        {
+            if (x.height.CompareTo(y.height) != 0)
+            {
+                return x.height.CompareTo(y.height);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
 }
